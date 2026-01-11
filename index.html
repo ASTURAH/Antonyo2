@@ -2,106 +2,12 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>معرض الصور 🐶</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background-color: #f0f0f0;
-    }
-    #photos div {
-      margin-bottom: 20px;
-      display: inline-block;
-      background: white;
-      padding: 10px;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-    #photos img {
-      width: 300px;
-      height: auto;
-      border-radius: 10px;
-    }
-    button.like-btn {
-      padding: 5px 12px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 5px;
-    }
-    span.likes {
-      font-weight: bold;
-      margin-left: 5px;
-    }
-  </style>
+  <title>صورة كلب</title>
 </head>
 <body>
 
 <h1>صورة كلب 🐶</h1>
-<div id="photos"></div>
-
-<!-- Firebase JS SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
-<script>
-  // 🔑 إعدادات مشروع Firebase
-  const firebaseConfig = {
-    apiKey: "AIzaSyC1RmLZwaQjYe4_MnkIsYAX-s-Ncvi9LeQ",
-    authDomain: "antonyo2.firebaseapp.com",
-    projectId: "antonyo2",
-    storageBucket: "antonyo2.firebasestorage.app",
-    messagingSenderId: "376011820442",
-    appId: "1:376011820442:web:fd7f60a6cd8a1a3a3b3e23",
-    measurementId: "G-56ZB2FTKSE"
-  };
-
-  // ⚡ تهيئة Firebase
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-
-  // 🔹 بيانات صورة الكلب فقط
-  const dogPhoto = {
-    title: "صورة كلب",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/1/18/Dog_Breeds.jpg",
-    likes: 0
-  };
-
-  // إضافة المستند إذا ما في أي مستند موجود
-  db.collection("photos").get().then(snapshot => {
-    if (snapshot.empty) {
-      db.collection("photos").add(dogPhoto);
-    }
-  });
-
-  // 📸 عرض صورة الكلب وجعل زر اللايك شغال
-  db.collection("photos").onSnapshot(snapshot => {
-    document.getElementById("photos").innerHTML = ""; // مسح القديم
-    snapshot.forEach(doc => {
-      const data = doc.data();
-      const photoDiv = document.createElement("div");
-
-      photoDiv.innerHTML = `
-        <h3>${data.title}</h3>
-        <img src="${data.imageUrl}" alt="${data.title}"><br>
-        ❤️ <span class="likes">${data.likes ?? 0}</span>
-        <br><button class="like-btn">Like</button>
-      `;
-
-      const likeBtn = photoDiv.querySelector(".like-btn");
-      const likesSpan = photoDiv.querySelector(".likes");
-
-      likeBtn.addEventListener("click", () => {
-        const newLikes = (data.likes ?? 0) + 1;
-        likesSpan.textContent = newLikes;
-
-        db.collection("photos").doc(doc.id).update({ likes: newLikes });
-        data.likes = newLikes;
-      });
-
-      document.getElementById("photos").appendChild(photoDiv);
-    });
-  });
-</script>
+<img src="https://upload.wikimedia.org/wikipedia/commons/1/18/Dog_Breeds.jpg" width="400">
 
 </body>
 </html>
