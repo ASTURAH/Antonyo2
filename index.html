@@ -2,12 +2,59 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>صورة كلب</title>
+  <title>صورة حمزة</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f0f0;
+      margin-top: 50px;
+    }
+    #photo-container {
+      display: inline-block;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    img {
+      width: 400px;
+      height: auto;
+      border-radius: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    span {
+      font-weight: bold;
+      margin-left: 10px;
+      font-size: 18px;
+    }
+  </style>
 </head>
 <body>
 
-<h1>صورة كلب 🐶</h1>
-<img src="https://upload.wikimedia.org/wikipedia/commons/1/18/Dog_Breeds.jpg" width="400">
+<h1>صورة حمزة 📸</h1>
+
+<div id="photo-container">
+  <img src="https://i.postimg.cc/XXXXXX/yourphoto.jpg" alt="صورة حمزة"><br>
+  <button id="like-btn">Like ❤️</button>
+  <span id="like-count">0</span>
+</div>
+
+<script>
+  const likeBtn = document.getElementById("like-btn");
+  const likeCount = document.getElementById("like-count");
+  let likes = 0;
+
+  likeBtn.addEventListener("click", () => {
+    likes++;
+    likeCount.textContent = likes;
+  });
+</script>
 
 </body>
 </html>
