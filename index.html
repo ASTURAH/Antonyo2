@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>معرض الصور</title>
+  <title>معرض الصور 🐶</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -36,10 +36,10 @@
 </head>
 <body>
 
-<h1>معرض الصور 🐱🐶</h1>
+<h1>صورة كلب 🐶</h1>
 <div id="photos"></div>
 
-<!-- Firebase JS SDK (Compat Version) -->
+<!-- Firebase JS SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
@@ -59,8 +59,23 @@
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
 
-  // 📸 جلب الصور من Firestore وعرضها
+  // 🔹 مستند الكلب فقط
+  const dogPhoto = {
+    title: "صورة كلب",
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/1/12/Dog_portrait.jpg",
+    likes: 0
+  };
+
+  // إضافة المستند إذا قاعدة البيانات فارغة
   db.collection("photos").get().then(snapshot => {
+    if (snapshot.empty) {
+      db.collection("photos").add(dogPhoto);
+    }
+  });
+
+  // 📸 عرض صورة الكلب
+  db.collection("photos").onSnapshot(snapshot => {
+    document.getElementById("photos").innerHTML = ""; // مسح القديم
     snapshot.forEach(doc => {
       const data = doc.data();
       const photoDiv = document.createElement("div");
@@ -72,7 +87,6 @@
         <br><button class="like-btn">Like</button>
       `;
 
-      // زر اللايك
       const likeBtn = photoDiv.querySelector(".like-btn");
       const likesSpan = photoDiv.querySelector(".likes");
 
@@ -80,11 +94,8 @@
         const newLikes = (data.likes ?? 0) + 1;
         likesSpan.textContent = newLikes;
 
-        // تحديث الرقم في Firestore
-        db.collection("photos").doc(doc.id).update({
-          likes: newLikes
-        });
-        data.likes = newLikes; // تحديث مؤقت للعرض
+        db.collection("photos").doc(doc.id).update({ likes: newLikes });
+        data.likes = newLikes;
       });
 
       document.getElementById("photos").appendChild(photoDiv);
