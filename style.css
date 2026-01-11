@@ -11,4 +11,13 @@ button {
   background-color: red;
   color: white;
   border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: darkred;
+}
+
+h1 {
+  color: darkblue;
 }
